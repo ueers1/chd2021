@@ -9,11 +9,6 @@ function renderBoard(numRows, numCols, grid) {
             cellEl.className = "cell";
             grid[i][j].cellEl = cellEl;
 
-            // if ( grid[i][j].count === -1) {
-            //     cellEl.innerText = "*";    
-            // } else {
-            //     cellEl.innerText = grid[i][j].count;
-            // }
 
             cellEl.addEventListener("click", (e)=> {
                 if (grid[i][j].count === -1) {
@@ -108,6 +103,77 @@ function initialize(numRows, numCols, numMines) {
     // console.log(grid);
 
     return grid;
+}
+function searchClearArea(grid, row, col, numRows, numCols) {
+    let gridCell = grid[row][col];
+    gridCell.clear = true;
+    gridCell.cellEl.classList.add("clear");
+
+    for (let [drow, dcol] of directions) {
+        let cellRow = row + drow;
+        let cellCol = col + dcol;
+        console.log(cellRow, cellCol, numRows, numCols);
+        if (cellRow < 0 || cellRow >= numRows || cellCol < 0 || cellCol >= numCols) {
+            continue;
+        }
+
+        let gridCell = grid[cellRow][cellCol];
+
+        console.log(cellRow, cellCol, gridCell);
+        
+        if (!gridCell.clear) {
+            gridCell.clear = true;
+            gridCell.cellEl.classList.add("clear");
+            if (gridCell.count === 0) {
+                searchClearArea(grid, cellRow, cellCol, numRows, numCols);
+            } else if (gridCell.count > 0) {
+                gridCell.cellEl.innerText = gridCell.count;
+            } 
+        }
+    }
+}
+
+function explode(grid, row, col, numRows, numCols) {
+    grid[row][col].cellEl.classList.add("exploded");
+
+    for (let cellRow = 0; cellRow < numRows; cellRow++) {
+        for (let cellCol = 0; cellCol < numCols; cellCol++) {
+            let cell =  grid[cellRow][cellCol];
+            cell.clear = true;
+            cell.cellEl.classList.add('clear');
+
+            if (cell.count === -1) {
+                cell.cellEl.classList.add('landmine');
+            }
+        }
+    }
+}
+
+function checkAllClear(grid) {
+    for (let row = 0; row < grid.length; row ++) {
+        let gridRow = grid[row];
+        for (let col = 0; col < gridRow.length; col ++) {
+            let cell = gridRow[col];
+            if (cell.count !== -1 && !cell.clear) {
+                return false;
+            }
+        }
+    }
+
+    for (let row = 0; row < grid.length; row ++) {
+        let gridRow = grid[row];
+        for (let col = 0; col < gridRow.length; col ++) {
+            let cell = gridRow[col];
+
+            if (cell.count === -1) {
+                cell.cellEl.classList.add('landmine');
+            }
+
+            cell.cellEl.classList.add("success");
+        }
+    }
+
+    return true;
 }
 
 
