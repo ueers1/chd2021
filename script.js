@@ -1,4 +1,5 @@
-
+var alertbox=document.getElementById('alertbox');
+var alertimg=document.getElementById('alertimg');
 function renderBoard(numRows, numCols, grid) {
     let boardEl = document.querySelector("#board");
 
@@ -133,6 +134,8 @@ function searchClearArea(grid, row, col, numRows, numCols) {
     }
 }
 
+
+
 function explode(grid, row, col, numRows, numCols) {
     grid[row][col].cellEl.classList.add("exploded");
 
@@ -141,9 +144,16 @@ function explode(grid, row, col, numRows, numCols) {
             let cell =  grid[cellRow][cellCol];
             cell.clear = true;
             cell.cellEl.classList.add('clear');
-
+           
+            
             if (cell.count === -1) {
                 cell.cellEl.classList.add('landmine');
+
+                setTimeout(function(){
+                alertbox.style.display = "block";
+                },1000)
+    
+                
             }
         }
     }
@@ -164,10 +174,12 @@ function checkAllClear(grid) {
         let gridRow = grid[row];
         for (let col = 0; col < gridRow.length; col ++) {
             let cell = gridRow[col];
+            
 
             if (cell.count === -1) {
                 cell.cellEl.classList.add('landmine');
             }
+           
 
             cell.cellEl.classList.add("success");
         }
@@ -178,7 +190,8 @@ function checkAllClear(grid) {
 
 
 
-let grid = initialize(9, 9, 9);
+let grid = initialize(10, 10, 10);
 
 
-renderBoard(9, 9, grid);
+renderBoard(10, 10, grid);
+landmine.exploded
