@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+<!--  -->
+{% block styles %}
+    <link href="/student_list.css" rel="stylesheet" />
+{% endblock %}
+
+<!--  -->
+{% block page_content %}
+
+<body>
+<div>
+    <table>
+        <tr>
+            <th>姓名</th>
+            <th>课程</th>
+            <th>成绩</th>
+            <th>操作</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.stu_name }}</td>
+            <td>{{ item.cou_name }}</td>
+            <td>{{ item.grade }}</td>
+           
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+ 
+</body>
+</html>
+{% endblock %}
