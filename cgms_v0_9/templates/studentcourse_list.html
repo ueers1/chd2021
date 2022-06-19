@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link href="/grade_list.css" rel="stylesheet" />
+{% endblock %}
+
+
+{% block page_content %}
+<div class="paper">
+    <form class="grade-form" action="/action/studentcourse/add" method="post">
+        <label>课程信息</label>
+        <select name="courseschedule">
+            <option value="">--选择--</option>
+            {% for item in courseschedule %}
+            <option value="{{item.id}}">
+                {{item.course_name + '/' + item.class_location + '/' + item.class_date + '/' + item.class_teacher}}
+            </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="添加选课" />
+    </form>
+    <hr />
+    <table>
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>课程名</th>
+            <th>学期</th>
+            <th>学分</th>
+            <th>学时</th>
+            <th>班次</th>
+            <th>地点</th>
+            <th>时间</th>
+            <th>任课老师</th>
+        </tr>
+        {% for item in studentcourses %}
+        <tr>
+            <td>{{ item.id}}</td>
+            <td>{{ item.name}}</td>
+            <td>{{ item.course_name}}</td>
+            <td>{{ item.semester}}</td>
+            <td>{{ item.credits}}</td>
+            <td>{{ item.hours}}</td>
+            <td>{{ item.clas_shift}}</td>
+            <td>{{ item.class_location}}</td>
+            <td>{{ item.class_date}}</td>
+            <td>{{ item.class_teacher}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

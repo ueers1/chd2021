@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link href="/grade_list.css" rel="stylesheet" />
+{% endblock %}
+
+
+{% block page_content %}
+<div class="paper">
+    <form class="grade-form" action="/action/course/add" method="post">
+        <label>课程号</label>
+        <input type="text" name="no" />
+        <label>课程名称</label>
+        <input type="text" name="name" />
+        <label>学期</label>
+        <input type="text" name="semester" />
+        <label>学分</label>
+        <input type="text" name="credits" />
+        <label>学时</label>
+        <input type="text" name="hours" />
+        <input type="submit" value="添加课程" />
+    </form>
+    <hr />
+    <table>
+        <tr>
+            <th>课程号</th>
+            <th>课程名称</th>
+            <th>学期</th>
+            <th>学分</th>
+            <th>学时</th>
+        </tr>
+        {% for item in courses %}
+        <tr>
+            <td>{{ item.no}}</td>
+            <td>{{ item.cou_name}}</td>
+            <td>{{ item.semester}}</td>
+            <td>{{ item.credits}}</td>
+            <td>{{ item.cou_hours}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
