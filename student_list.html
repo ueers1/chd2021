@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link href="/grade_list.css" rel="stylesheet" />
+{% endblock %}
+
+
+{% block page_content %}
+<div class="paper">
+    <form class="grade-form" action="/action/student/add" method="post">
+        <label>姓名</label>
+        <input type="text" name="name" />
+        <label>学号</label>
+        <input type="text" name="no" />
+        <label>性别</label>
+        <input type="text" name="gender" />
+        <label>入学时间</label>
+        <input type="text" name="enrolled" />
+        <label>学院</label>
+        <input type="text" name="college" />
+        <label>学级</label>
+        <input type="text" name="grade" />
+        <label>班级</label>
+        <input type="text" name="class" />
+        <input type="submit" value="添加学生" />
+    </form>
+    <hr />
+    <table>
+        <tr>
+            <th>序号</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>入学时间</th>
+            <th>学院</th>
+            <th>学级</th>
+            <th>班级</th>
+            <th>课程信息</th>
+        </tr>
+        {% for item in students %}
+        <tr>
+            <td>{{ item.sn}}</td>
+            <td>{{ item.no}}</td>
+            <td>{{ item.name}}</td>
+            <td>{{ item.gender}}</td>
+            <td>{{ item.enrolled}}</td>
+            <td>{{ item.college}}</td>
+            <td>{{ item.grade}}</td>
+            <td>{{ item.classname}}</td>
+            <td>
+                <div class="ctrlbar">
+                    <div class="btn">
+                        <a href="/studentcourse/{{item.sn}}">
+                            课程信息
+                        </a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
